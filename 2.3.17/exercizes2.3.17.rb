@@ -53,14 +53,13 @@
 
 #Choose your own adventure
 #3 choices in the story for a total of 6 outcomes
-story = Story.new
-story.begin_story
+
 
 class Choice
 	attr_accessor :choose
 	attr_accessor :question
 
-	def initialize(choose, question)
+	def initialize
 		@choose = choose
 		@question = question
 	end
@@ -75,14 +74,13 @@ end
 class Adventure
 	attr_accessor :name
 
-	def initialize(name)
+	def initialize
 		@name = name
 	end
 
 	def get_name
 		puts "What is your name?"
 		name = gets.chomp
-		returns name
 	end
 end
 
@@ -94,38 +92,43 @@ class Character
 	attr_accessor :alive
 
 	def initialize(character_name, fix_computer, lifts_things, carries_weapon, alive)
-		@character_name, @fix_computer, @lifts_things, @carries_weapon, @alive = character_name, fix_computer, lifts_things, carries weapon, alive
+		@character_name = character_name
+		@fix_computer = fix_computer
+		@lifts_things = lifts_things
+		@carries_weapon = carries_weapon
+		@alive = alive
 	end
-	alive = true
 end
 
 class Story
 	attr_accessor :player
 	attr_accessor :party
 
-	dylan = Character.new("Dylan Richards", true, false, false)
-	ogi = Character.new("Ogi", true, true, false)
-	ai = Character.new("Allen Iverson", false, false, true)
-	first_choice = Choice.new()
-	first_choice.question = "Will you take " + dylan.character_name + "with you on your journey?"
-	second_choice = Choice.new
-	second_choice.question = "Will you allow " + ogi.character_name + " to join your walking party?"
-	third_choice = Choice.new
-	third_choice.question = "Can AI walk with you?"
-	fourth_choice = Choice.new
-	fourth_choice.question = "Would you like to try again?"
+	
 
-	def initialize(player, party)
+	def initialize
 		@player = player
 		@party = party
 	end
 
-	player = Adventure.new.get_name
-
-
+	def starts
+		player = Adventure.new
+		player.get_name
+		dylan = Character.new("Dylan Richards", true, false, false, true)
+		ogi = Character.new("Ogi", true, true, false, true)
+		ai = Character.new("Allen Iverson", false, false, true, true)
+		first_choice = Choice.new
+		first_choice.question = "Will you take " + dylan.character_name + "with you on your journey?"
+		second_choice = Choice.new
+		second_choice.question = "Will you allow " + ogi.character_name + " to join your walking party?"
+		third_choice = Choice.new
+		third_choice.question = "Can AI walk with you?"
+		fourth_choice = Choice.new
+		fourth_choice.question = "Would you like to try again?"
+	end
 	def begin_story
 		party = []
-		puts "You, " + player + "are walking alone in a dark wood."
+		puts "You, " + " are walking alone in a dark wood."
 		puts "You come across " + dylan.character_name + ", and he asks if he can walk with you."
 		first_choice
 		if first_choice.choose == "y"
@@ -215,3 +218,7 @@ class Story
 		end
 	end
 end
+
+story = Story.new
+story.starts
+story.begin_story
