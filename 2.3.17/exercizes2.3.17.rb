@@ -98,12 +98,14 @@ end
 class Story
 	attr_accessor :player
 	attr_accessor :party
+	attr_accessor :party_list
 
 	
 
 	def initialize
 		@player = player
 		@party = Array.new(3){Hash.new}
+		@party_list = Array.new
 		@player = Adventure.new
 		@player.get_name
 		@dylan = Character.new("Dylan Richards", true, false, false, true)
@@ -124,6 +126,7 @@ class Story
 		@first_choice.the_choice
 		if @first_choice.choose == "y"
 			@party[0]=@dylan
+			@party_list << @dylan.character_name
 		else 
 			@dylan.alive = false
 		end
@@ -144,6 +147,7 @@ class Story
 			if @second_choice.choose == "y"
 				puts @ogi.character_name + " says 'Thankyou so much. I can help you because I am super strong.'"
 				@party[1] = @ogi
+				@party_list << @ogi.character_name
 				third_leg
 			else
 				puts "Ogi runs away looking very afraid."
@@ -158,13 +162,14 @@ class Story
 	end
 	def third_leg
 		gets.chomp
-		puts "You continue walking, when yo hear footsteps coming toward you..."
+		puts "You continue walking, when you hear footsteps coming toward you..."
 		gets.chomp
 		puts "Suddenly, " + @ai.character_name + " emerges from some bushes and asks if he can walk with you through the woods."
 		@third_choice.the_choice
 		if @third_choice.choose == "y"
 			puts @ai.character_name + " says, 'excellent, I'm carrying a knife so I can stab things.'"
 			@party[2] = @ai
+			@party_list << @ai.character_name
 			fourth_leg
 		else
 			puts "AI flies away into the distance on a magical rainbow and you find yourself feeling a bit less safe."
@@ -181,7 +186,7 @@ class Story
 		end
 		if @party.include?(@ai)
 			gets.chomp
-			puts @ai.character_name + "says, 'I ain't helping you.'"
+			puts @ai.character_name + " says, 'I ain't helping you.'"
 			gets.chomp
 		end
 		if @party.include?(@ogi)
@@ -222,10 +227,8 @@ class Story
 		gets.chomp
 		puts "Everyone in your party has died, including you!"
 		puts @player.pname + ": Deceased"
-		puts @dylan
-		@party.each do |person|
-			puts person.character_name
-		
+		@party_list.each do |person|
+				puts person + ": Deceased"
 		end
 		puts "The story is over."
 		@fourth_choice.the_choice
