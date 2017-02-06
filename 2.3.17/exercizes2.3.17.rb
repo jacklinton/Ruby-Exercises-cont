@@ -222,9 +222,10 @@ class Story
 		gets.chomp
 		puts "Everyone in your party has died, including you!"
 		puts @player.pname + ": Deceased"
-		p @party
+		puts @dylan
 		@party.each do |person|
-			puts person.find { |i| i["character_name"] } + ": Deceased"
+			puts person.character_name
+		
 		end
 		puts "The story is over."
 		@fourth_choice.the_choice
