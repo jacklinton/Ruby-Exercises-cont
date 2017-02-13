@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Testing DBs</title>
+</head>
+<body>
+	<h1>Hello WOrld!</h1>
+
+	<ul>
+		<% @users.each do |user| %>
+			<li><%= user.email%></li>
+			
+		<%end%>
+	</ul>
+
+</body>
+</html>
