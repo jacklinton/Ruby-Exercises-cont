@@ -72,6 +72,8 @@ post "/users/new" do
 
 	session[:user_id] = user.id
 
+	flash[:notice] = "You are now signed in with a new account!"
+
 	redirect "/"
 end
 
