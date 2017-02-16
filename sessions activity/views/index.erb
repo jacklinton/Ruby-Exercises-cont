@@ -5,7 +5,23 @@
 </head>
 <body>
 	<h1>Welcome to Jack's Blog</h1>
-	
+
+	<% if !session[:user_id] %>
+	<form action="/users/login" method="post">
+		<h4>Log In to Start Posting</h4>
+		<label for="email">Enter email:</label>
+		<input type="text" name="email" id="email">
+		<label for="password">Password:</label>
+		<input type="text" name="password" id="password">
+
+		<button type="submit">Log In</button>
+	</form>
+	<%else @user = User.find(session[:user_id])%>
+		<h2>You are now logged in as <%= @user.fname %>!</h2>
+		<form action="/log/out" method="post"><button type="submit">Log Out</button></form>
+		<br>
+		<br>
+	<% end %>
 	<%= flash[:notice] if flash[:notice] %>
 	<br>
 

@@ -8,12 +8,8 @@ set :database, "sqlite3:sessions.sqlite3"
 enable :sessions
 
 get "/" do 
-	@user = User.all
 	@posts = Post.all
 
-	session[:visited] = "I'm here."
-
-	p session[:visited]
 
 	erb :index
 
@@ -63,10 +59,6 @@ post '/posts/edit/:id' do
 	redirect "/posts/#{@post.id}"
 end
 
-get "/sign/in" do
-	erb :sign_in
-end
-
 post "/users/new" do
 	user = User.create(fname: params["fname"], lname: params["lname"], email: params["email"], password: params["password"])
 
@@ -79,4 +71,23 @@ end
 
 get "/sign_in" do
 	erb :sign_in
+end
+
+post "/users/login" do
+	
+	user = User.where(email: params[:email]).first
+
+	if user.password == params[:password]
+		flash[:notice] = "You are now logged in."
+		session[:user_id] = user.id
+	else
+		flash[:notice] = "Incorrect login credentials."
+	end
+	redirect "/"
+end
+
+post "/log/out" do
+	session.clear
+
+	redirect "/"
 end
