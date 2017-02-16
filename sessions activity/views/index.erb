@@ -43,7 +43,14 @@
 		<h1>Most Recent Posts</h1>
 		<ul>
 			<% @posts.each do |post| %>
-				<li><a href="posts/<%= post.id %>"><%=post.title%></a> | <a href="posts/delete/<%= post.id %>" >delete</a></li>
+				<li>
+				<% id = post.user_id %>
+					<% user = User.find(id) %> 
+					<%= user.fname %>:
+				<a href="posts/<%= post.id %>">
+					
+					<%=post.title%>
+				</a> | <a href="posts/delete/<%= post.id %>" >delete</a></li>
 			<%end%>
 		</ul>
 	</form>

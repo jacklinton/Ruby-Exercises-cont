@@ -23,6 +23,7 @@ post "/posts" do
 
 	post.title = params["title"]
 	post.body = params["body"]
+	post.user_id = session[:user_id]
 
 	post.save
 
